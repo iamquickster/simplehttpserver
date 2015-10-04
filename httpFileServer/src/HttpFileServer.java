@@ -14,8 +14,8 @@ import java.util.Map;
 
 public class HttpFileServer {
 
-	private static final String FILE_NOT_FOUND_RESPONSE = null;
-
+	private static final String FILE_NOT_FOUND_RESPONSE = "HTTP/1.1 404 Not Found\r\n";
+	private static final String SERVER_ERROR_RESPONSE = "HTTP/1.1 500 Internal Server Error";
 	private static final String ROOT_DIR = "/";
 	private static final String FORBIDDEN_403 = "HTTP/1.1 403 Forbidden\r\n";
 	private static final String RESOURCE_DIR = "/resources";
@@ -78,13 +78,17 @@ public class HttpFileServer {
 				response += "Content-Type: text/html\r\n\r\n";
 				response += body;
 			} else {
-
+				
 				// get resource
 				InputStream resourceStream = this.getClass().getResourceAsStream(RESOURCE_DIR + protocolTokens[1]);
 
 				if (resourceStream == null) {
-					//TODO create file not found response
+					String body = "<!DOCTYPE html><html><body><h1>404 - FILE NOT FOUND</h1></body></html>";
 					response = FILE_NOT_FOUND_RESPONSE;
+					response += "Content-Length: " + body.length() + "\r\n";
+					response += "Content-Type: text/html\r\n\r\n";
+					response += body;
+					
 				} else {
 					BufferedReader contentStream = new BufferedReader(new InputStreamReader(resourceStream));
 					String contentLine = contentStream.readLine();
@@ -110,14 +114,77 @@ public class HttpFileServer {
 			in.close();
 
 		} catch (IOException e) {
-			// TODO return 500 response for internal error
+			// 500 response for internal error
+			String body = "<!DOCTYPE html><html><body><h1>500 - INTERNAL SERVER ERROR</h1></body></html>";
+			String response = SERVER_ERROR_RESPONSE;
+			response += "Content-Length: " + body.length() + "\r\n";
+			response += "Content-Type: text/html\r\n\r\n";
+			response += body;
+			
+			// Open output stream
+			PrintWriter output;
+			try {
+				output = new PrintWriter(request.getOutputStream());
+				// send content
+				output.println(response);
+				output.flush();
+				output.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
 	}
 
 	private String getContentType(String string) {
-		// TODO Get file type based on extension and return proper Content-Length
-		return "text/html";
+
+		String extention=string.substring(string.lastIndexOf(".")+1);
+		String contentType;
+		if(extention=="avi"){
+			contentType="video/avi";
+		}else if(extention=="bin"){
+			contentType="application/x-binary";
+		}else if(extention=="bmp"){
+			contentType="image/bmp";
+		}else if(extention=="text" ||extention=="c" || extention=="java" ||extention=="h"|| extention=="c++"|| extention=="cc" || extention=="com" ){
+			contentType="text/plain";
+		}else if(extention=="class" ){
+			contentType="application/java";
+		}else if(extention=="cpp" ){
+			contentType="text/x-c";
+		}else if(extention=="css" ){
+			contentType="text/css";
+		}else if(extention=="css" ){
+			contentType="application/msword";
+		}else if(extention=="gz" ||extention=="gzip" ){
+			contentType="application/x-gzip";
+		}else if(extention=="jpeg" ||extention=="jpg" ){
+			contentType="image/jpeg";
+		}else if(extention=="js" ){
+			contentType="text/javascript";
+		}else if(extention=="mp3" ){
+			contentType="audio/mpeg3";
+		}else if(extention=="o" ){
+			contentType="application/octet-stream";
+		}else if(extention=="pdf" ){
+			contentType="application/pdf";
+		}else if(extention=="png" ){
+			contentType="image/png";
+		}else if(extention=="ppt" ){
+			contentType="application/powerpoint";
+		}else if(extention=="py" ){
+			contentType="text/x-script.phyton";
+		}else if(extention=="sh" ){
+			contentType="text/x-script.sh";
+		}else if(extention=="xls" ){
+			contentType="application/x-excel";
+		}else if(extention=="xml" ){
+			contentType="application/xml";
+		}else if(extention=="zip" ){
+			contentType="application/zip";
+		}else
+			contentType="text/html";
+		return contentType;
 	}
 
 	private String getResourceResponse(String content, String type) {
