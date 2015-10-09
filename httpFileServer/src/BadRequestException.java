@@ -1,6 +1,8 @@
 
 
-
+/*
+ * Exception qui indique qu'une requête est mal formée
+ */
 public class BadRequestException extends Exception {
 
 	/**

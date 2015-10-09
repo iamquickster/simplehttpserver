@@ -7,7 +7,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+ * Serveur HTTP qui est responsable enregistrer different route poosible pour une requete
+ */
 public class HttpServer {
 
 	private ServerSocket server;
@@ -23,6 +25,9 @@ public class HttpServer {
 		}
 	}
 
+	/*
+	 * Ajouter une route possible pour une requete donnée
+	 */
 	private void registerRoute(Route route) {
 		routes.add(route);
 	}
@@ -42,6 +47,9 @@ public class HttpServer {
 
 	}
 
+	/*
+	 * Lancer le server qui accept les requetes et les routes au service approprié
+	 */
 	private void start() {
 		System.out.println("Listening on " + server.getLocalPort());
 		while (true) {
@@ -55,14 +63,16 @@ public class HttpServer {
 					Request request = null;
 					Response response = null;
 					try {
+						//créer une requete
 						request = new Request(in);
+						//router la requete
 						response = route(request);
 					} catch (BadRequestException e) {
-						// TODO Auto-generated catch block
 						response = responseFactory.createResponse(400);
 					}
 					
 					System.out.println(response);
+					//envoyer la reponse
 					PrintWriter out = new PrintWriter(socket.getOutputStream());
 					out.print(response.toString());
 					out.flush();
@@ -76,6 +86,10 @@ public class HttpServer {
 		}
 	}
 
+	/*
+	 * Route une requete à la première Route qui l'accepte
+	 * Sinon une reponse 404 est générer
+	 */
 	private Response route(Request request) {
 		if(request.getUri().equals("/")) {
 			return responseFactory.createResponse(403);

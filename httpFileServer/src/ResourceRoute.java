@@ -1,14 +1,22 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/*
+ * Route qui retourne une ressource, si elle existe dans le répertoir /resources, dans une Reponse HTTP
+ * Accept seulement les méthodes GET 
+ */
 public class ResourceRoute implements Route {
 
 	private static final String RESOURCE_DIR = "/resources";
 	private ResponseFactory responseFactory = ResponseFactory.newInstance();
 
+	/*
+	 * Verifie si la requete est un GET et que une ressource avec le meme nom que URL existe
+	 * (non-Javadoc)
+	 * @see Route#accept(Request)
+	 */
 	@Override
 	public boolean accept(Request request) {
 		if(!request.getMethod().equals("GET")) {
@@ -20,7 +28,12 @@ public class ResourceRoute implements Route {
 		System.out.println("Path veryfied: " + RESOURCE_DIR + request.getUri());
 		return this.getClass().getResource(RESOURCE_DIR + request.getUri())!=null;
 	}
-
+	/*
+	 * Retourne une reponse HTTP contenant le fichier pointer par l'url de la 
+	 * requete et identifie le format de ce dernier.
+	 * (non-Javadoc)
+	 * @see Route#action(Request)
+	 */
 	@Override
 	public Response action(Request request) {
 		

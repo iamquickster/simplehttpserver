@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/*
+ * Représent une requete HTTP
+ * Responsable de parser le flux de donnée envoyé par un client
+ */
 public class Request {
 
 	private static final String CONTENT_LENGTH_HEADER = "Content-Length";
@@ -17,8 +21,7 @@ public class Request {
 	private String version;
 	private String body;
 	private Map<String, String> headers = new HashMap<String, String>();
-	private String params;
-	private String anchor;
+
 
 	public Request(InputStream inputStream) throws BadRequestException {
 

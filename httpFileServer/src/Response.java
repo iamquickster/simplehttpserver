@@ -8,6 +8,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/*
+ * Une Réponse HTTP
+ * reponsable D'implémenté la specification HTTP
+ */
 public class Response {
 
 	private static final String DEFAULT_RESPONSE_LINE = "HTTP/1.1 200 OK\r\n";
@@ -22,6 +26,7 @@ public class Response {
 	public ResponseFactory responseFactory = ResponseFactory.newInstance();
 	private SimpleDateFormat rfc1123 = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.CANADA);;
 	
+	//initailization des constantes HTTP
 	public Response() { 
 		this.responseLines.put(200, "HTTP/1.1 200 OK\r\n");
 		this.responseLines.put(400, "HTTP/1.1 400 Bad Request\r\n");
@@ -30,7 +35,9 @@ public class Response {
 		this.responseLines.put(500, "HTTP/1.1 500 Internal Server Error\r\n");
 	}
 
-
+	/*
+	 * Créer Response html avec contenu
+	 */
 	public Response(String body) {
 		this();
 		this.responseLine = getDefaultResponseLine();
@@ -38,9 +45,12 @@ public class Response {
 		this.body = body;
 	}
 
-	public Response(int i, String contentType, String content) {
+	/*
+	 * Créer une reponse http avec un code et un contenu
+	 */
+	public Response(int code, String contentType, String content) {
 		this();
-		this.responseLine = this.responseLines.get(i);
+		this.responseLine = this.responseLines.get(code);
 		this.headers.put(CONTENT_TYPE_HEADER, contentType);
 		this.headers.put(CONTENT_LENGTH_HEADER, Integer.toString(content.getBytes().length));
 		this.headers.put(DATE_HEADER, rfc1123.format(new Date()));

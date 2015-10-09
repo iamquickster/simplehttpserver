@@ -1,5 +1,9 @@
-import java.util.Map;
 
+
+/*
+ * Frabrique de réponse HTTP
+ * Crée des templates de réponse HTTP
+ */
 public class ResponseFactory {
 
 	public static ResponseFactory newInstance() {
