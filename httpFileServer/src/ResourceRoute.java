@@ -11,6 +11,9 @@ public class ResourceRoute implements Route {
 
 	@Override
 	public boolean accept(Request request) {
+		if(!request.getMethod().equals("GET")) {
+			return false;
+		}
 		if(request.getUri().matches("\\/*")) {
 			return false;
 		}
@@ -42,7 +45,7 @@ public class ResourceRoute implements Route {
 			String contentType = getContentType(request.getUri());
 			
 			Response response = responseFactory.createResponse(200);
-			response.setContent(contentType, content);
+			response.setContent(contentType, content, "utf-8");
 			
 			return response;
 			} catch ( IOException e) {
@@ -55,47 +58,47 @@ public class ResourceRoute implements Route {
 
 		String extention=uri.substring(uri.lastIndexOf(".")+1);
 		String contentType;
-		if(extention.equals("avi")){
+		if(extention.equalsIgnoreCase("avi")){
 			contentType="video/avi";
-		}else if(extention.equals("bin")){
+		}else if(extention.equalsIgnoreCase("bin")){
 			contentType="application/x-binary";
-		}else if(extention.equals("bmp")){
+		}else if(extention.equalsIgnoreCase("bmp")){
 			contentType="image/bmp";
-		}else if(extention.equals("txt")){
+		}else if(extention.equalsIgnoreCase("txt")){
 			contentType="text/plain";
-		}else if(extention.equals("class" )){
+		}else if(extention.equalsIgnoreCase("class" )){
 			contentType="application/java";
-		}else if(extention.equals("cpp") ){
+		}else if(extention.equalsIgnoreCase("cpp") ){
 			contentType="text/x-c";
-		}else if(extention.equals("css" )){
+		}else if(extention.equalsIgnoreCase("css" )){
 			contentType="text/css";
-		}else if(extention.equals("css" )){
+		}else if(extention.equalsIgnoreCase("css" )){
 			contentType="application/msword";
-		}else if(extention.equals("gz") ||extention.equals("gzip") ){
+		}else if(extention.equalsIgnoreCase("gz") ||extention.equalsIgnoreCase("gzip") ){
 			contentType="application/x-gzip";
-		}else if(extention.equals("jpeg") ||extention.equals("jpg") ){
+		}else if(extention.equalsIgnoreCase("jpeg") ||extention.equalsIgnoreCase("jpg") ){
 			contentType="image/jpeg";
-		}else if(extention.equals("js") ){
+		}else if(extention.equalsIgnoreCase("js") ){
 			contentType="text/javascript";
-		}else if(extention.equals("mp3") ){
+		}else if(extention.equalsIgnoreCase("mp3") ){
 			contentType="audio/mpeg3";
-		}else if(extention.equals("o") ){
+		}else if(extention.equalsIgnoreCase("o") ){
 			contentType="application/octet-stream";
-		}else if(extention.equals("pdf") ){
+		}else if(extention.equalsIgnoreCase("pdf") ){
 			contentType="application/pdf";
-		}else if(extention.equals("png") ){
+		}else if(extention.equalsIgnoreCase("png") ){
 			contentType="image/png";
-		}else if(extention.equals("ppt") ){
+		}else if(extention.equalsIgnoreCase("ppt") ){
 			contentType="application/powerpoint";
-		}else if(extention.equals("py") ){
+		}else if(extention.equalsIgnoreCase("py") ){
 			contentType="text/x-script.phyton";
-		}else if(extention.equals("sh" )){
+		}else if(extention.equalsIgnoreCase("sh" )){
 			contentType="text/x-script.sh";
-		}else if(extention.equals("xls") ){
+		}else if(extention.equalsIgnoreCase("xls") ){
 			contentType="application/x-excel";
-		}else if(extention.equals("xml" )){
+		}else if(extention.equalsIgnoreCase("xml" )){
 			contentType="application/xml";
-		}else if(extention.equals("zip") ){
+		}else if(extention.equalsIgnoreCase("zip") ){
 			contentType="application/zip";
 		}else
 			contentType="text/html";

@@ -79,5 +79,11 @@ public class Response {
 		this.headers.put(CONTENT_TYPE_HEADER, contentType);
 		setBody(content);
 	}
+
+
+	public void setContent(String contentType, String content, String encoding) {
+		this.headers.put(CONTENT_TYPE_HEADER, contentType + "; charset=" + encoding);
+		setBody(content);
+	}
 	
 }

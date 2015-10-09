@@ -87,4 +87,9 @@ public class Request {
 		return request;
 	}
 
+
+	public String getMethod() {
+		return method;
+	}
+
 }
