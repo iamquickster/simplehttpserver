@@ -3,7 +3,7 @@
 /*
  * Interface qui identifie une route possible pour un requete (Request)
  */
-public interface Route {
+public interface Controller {
 	/*
 	 * retourne vrai si cette route peux accepter la requete "request"
 	 * si non faux

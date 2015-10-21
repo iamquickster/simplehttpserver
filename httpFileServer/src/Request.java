@@ -21,6 +21,7 @@ public class Request {
 	private String version;
 	private String body;
 	private Map<String, String> headers = new HashMap<String, String>();
+	private Map<String, String> params = new HashMap<String, String>();
 
 
 	public Request(InputStream inputStream) throws BadRequestException {
@@ -39,6 +40,11 @@ public class Request {
 			this.method = requestLineTokens[0];
 			String[] uriTokens = requestLineTokens[1].split("\\?");
 			this.uri = uriTokens[0];
+			String[] paramsToken = uriTokens[1].split("&");
+			for(String sParam: paramsToken) {
+				String[] param = sParam.split("=");
+				this.params.put(param[0], param[1]);
+			}
 			
 			this.version = requestLineTokens[2];
 
@@ -93,6 +99,11 @@ public class Request {
 
 	public String getMethod() {
 		return method;
+	}
+
+
+	public Map<String, String> getParams() {
+		return params;
 	}
 
 }

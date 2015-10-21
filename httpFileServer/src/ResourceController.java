@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
  * Route qui retourne une ressource, si elle existe dans le répertoir /resources, dans une Reponse HTTP
  * Accept seulement les méthodes GET 
  */
-public class ResourceRoute implements Route {
+public class ResourceController implements Controller {
 
 	private static final String RESOURCE_DIR = "/resources";
 	private ResponseFactory responseFactory = ResponseFactory.newInstance();

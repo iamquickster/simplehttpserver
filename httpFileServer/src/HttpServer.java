@@ -13,13 +13,13 @@ import java.util.List;
 public class HttpServer {
 
 	private ServerSocket server;
-	private List<Route> routes = new ArrayList<Route>();
+	private List<Controller> routes = new ArrayList<Controller>();
 	private ResponseFactory responseFactory = ResponseFactory.newInstance();
 
 	public HttpServer(int port) {
 		try {
 			this.server = new ServerSocket(port);
-			registerRoute(new ResourceRoute());
+			registerRoute(new ResourceController());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -28,7 +28,7 @@ public class HttpServer {
 	/*
 	 * Ajouter une route possible pour une requete donnée
 	 */
-	private void registerRoute(Route route) {
+	private void registerRoute(Controller route) {
 		routes.add(route);
 	}
 
@@ -94,7 +94,7 @@ public class HttpServer {
 		if(request.getUri().equals("/")) {
 			return responseFactory.createResponse(403);
 		}
-		for (Route route : this.routes) {
+		for (Controller route : this.routes) {
 			if (route.accept(request)) {
 				return route.action(request);
 			}
