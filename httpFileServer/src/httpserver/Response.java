@@ -1,3 +1,4 @@
+package httpserver;
 
 
 
@@ -19,6 +20,7 @@ public class Response {
 	public static final String HTML_CONTENT_TYPE = "text/html";
 	private static final String CONTENT_LENGTH_HEADER = "Content-Length";
 	private static final String DATE_HEADER = "Date";
+	public static final Response BAD_REQUEST = createBadRequestResponse();
 	private String responseLine;
 	private Map<String,String> headers = new HashMap<String, String>();
 	private String body;
@@ -33,6 +35,10 @@ public class Response {
 		this.responseLines.put(403, "HTTP/1.1 403 Forbidden\r\n");
 		this.responseLines.put(404, "HTTP/1.1 404 Not Found\r\n");
 		this.responseLines.put(500, "HTTP/1.1 500 Internal Server Error\r\n");
+	}
+
+	private static Response createBadRequestResponse() {
+		return new Response(400, "text/html", "<h1> Bad Request </h2>");
 	}
 
 	/*

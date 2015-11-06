@@ -1,5 +1,8 @@
+package httpserver;
 
 
+
+import httpserver.services.twitter.model.TwitterUser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +18,8 @@ import java.util.Map.Entry;
  */
 public class Request {
 
-	private static final String CONTENT_LENGTH_HEADER = "Content-Length";
+	public static final String CONTENT_LENGTH_HEADER = "Content-Length";
+	public static final String CONTENT_TYPE_HEADER = "Content-Type";
 	private String method;
 	private String uri;
 	private String version;
@@ -104,6 +108,11 @@ public class Request {
 
 	public Map<String, String> getParams() {
 		return params;
+	}
+
+
+	public Map<String, String> getHeaders() {
+		return headers;
 	}
 
 }

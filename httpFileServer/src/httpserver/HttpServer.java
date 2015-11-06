@@ -1,3 +1,5 @@
+package httpserver;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,13 +15,12 @@ import java.util.List;
 public class HttpServer {
 
 	private ServerSocket server;
-	private List<Controller> routes = new ArrayList<Controller>();
-	private ResponseFactory responseFactory = ResponseFactory.newInstance();
+	private Router router = new Router();
+
 
 	public HttpServer(int port) {
 		try {
 			this.server = new ServerSocket(port);
-			registerRoute(new ResourceController());
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
@@ -28,8 +29,8 @@ public class HttpServer {
 	/*
 	 * Ajouter une route possible pour une requete donnée
 	 */
-	private void registerRoute(Controller route) {
-		routes.add(route);
+	public void registerController(Controller controller) {
+		router.add(controller);
 	}
 
 	public static void main(String[] args) {
@@ -66,9 +67,9 @@ public class HttpServer {
 						//créer une requete
 						request = new Request(in);
 						//router la requete
-						response = route(request);
+						response = router.route(request);
 					} catch (BadRequestException e) {
-						response = responseFactory.createResponse(400);
+						response = Response.BAD_REQUEST;
 					}
 					
 					System.out.println(response);
@@ -84,22 +85,6 @@ public class HttpServer {
 				ioe.printStackTrace();
 			}
 		}
-	}
-
-	/*
-	 * Route une requete à la première Route qui l'accepte
-	 * Sinon une reponse 404 est générer
-	 */
-	private Response route(Request request) {
-		if(request.getUri().equals("/")) {
-			return responseFactory.createResponse(403);
-		}
-		for (Controller route : this.routes) {
-			if (route.accept(request)) {
-				return route.action(request);
-			}
-		}
-		return responseFactory.createResponse(404);
 	}
 
 }

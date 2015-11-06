@@ -1,3 +1,4 @@
+package other;
 import java.text.MessageFormat;
 import java.util.List;
 
