@@ -115,4 +115,9 @@ public class Request {
 		return headers;
 	}
 
+
+	public String getContent() {
+		return body;
+	}
+
 }

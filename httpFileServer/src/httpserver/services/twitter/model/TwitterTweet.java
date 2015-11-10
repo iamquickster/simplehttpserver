@@ -2,6 +2,8 @@ package httpserver.services.twitter.model;
 
 import java.util.Date;
 
+import javax.json.JsonObject;
+
 public class TwitterTweet extends TwitterFeedItem{
 
 
@@ -18,6 +20,12 @@ public class TwitterTweet extends TwitterFeedItem{
 	public TwitterTweet(TwitterUser twitterUser, String message) throws IllegalArgumentException {
 		super(twitterUser, new Date());
 		this.setMessage(message);
+	}
+
+	@Override
+	public JsonObject toJson() {
+		// TODO Converts this object to json
+		return null;
 	}
 
 

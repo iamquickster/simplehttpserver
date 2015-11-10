@@ -101,5 +101,10 @@ public class Response {
 		this.headers.put(CONTENT_TYPE_HEADER, contentType + "; charset=" + encoding);
 		setBody(content);
 	}
+
+	public void setHeader(String key, String value) {
+		this.headers.put(key, value);
+		
+	}
 	
 }
