@@ -2,6 +2,8 @@ package httpserver.services.twitter.model;
 
 import java.util.Date;
 
+import javax.json.JsonObject;
+
 
 public class TwitterRetweet extends TwitterFeedItem{
 
@@ -11,8 +13,15 @@ public class TwitterRetweet extends TwitterFeedItem{
 		super(owner, new Date());
 		this.originalTweet = tweet;
 	}
+
 	
 	public TwitterTweet getOriginalTweet(){
 		return originalTweet;
+	}
+
+	@Override
+	public JsonObject toJson() {
+		// TODO Converts this object to json
+		return null;
 	}
 }

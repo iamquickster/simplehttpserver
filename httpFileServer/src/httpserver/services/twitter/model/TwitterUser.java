@@ -44,7 +44,7 @@ public class TwitterUser {
 		return result;
 	}
 
-	private TwitterTweet tweet(String message) {
+	public TwitterTweet tweet(String message) {
 		TwitterTweet result = new TwitterTweet(this, message);
 		this.tweets.add(result);
 		return result;

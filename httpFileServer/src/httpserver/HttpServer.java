@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import httpserver.services.twitter.controller.TwitterUserController;
+
 /*
  * Serveur HTTP qui est responsable enregistrer different route poosible pour une requete
  */
@@ -44,8 +46,9 @@ public class HttpServer {
 			server = new HttpServer(Integer.parseInt(args[0]));
 			
 		}
-
+		
 		server.registerController(new TwitterUserController());
+
 		server.start();
 
 	}

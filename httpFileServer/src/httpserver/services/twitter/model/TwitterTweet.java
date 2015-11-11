@@ -2,6 +2,8 @@ package httpserver.services.twitter.model;
 
 import java.util.Date;
 
+import javax.json.JsonObject;
+
 public class TwitterTweet extends TwitterFeedItem{
 
 
@@ -26,6 +28,13 @@ public class TwitterTweet extends TwitterFeedItem{
 	
 	public String getMessage(){
 		return message;
+	}
+
+
+	@Override
+	public JsonObject toJson() {
+		// TODO Converts this object to json
+		return null;
 	}
 
 

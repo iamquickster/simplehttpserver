@@ -1,4 +1,4 @@
-package httpserver.services.twitter.vue;
+package httpserver.services.twitter.view;
 
 import java.util.ArrayList;
 import java.util.List;

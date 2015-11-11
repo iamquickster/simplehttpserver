@@ -2,8 +2,6 @@ package httpserver;
 
 
 
-import httpserver.services.twitter.model.TwitterUser;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -115,6 +113,11 @@ public class Request {
 
 	public Map<String, String> getHeaders() {
 		return headers;
+	}
+
+
+	public String getContent() {
+		return body;
 	}
 
 }
