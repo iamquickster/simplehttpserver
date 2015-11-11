@@ -30,7 +30,8 @@ public class TwitterUserController implements Controller {
 		
 		if(userResource.equals("fil")) {
 			if(request.getMethod().equalsIgnoreCase("GET")){
-				String contentType= request.getHeaders().get(Request.CONTENT_TYPE_HEADER);
+				//String contentType= request.getHeaders().get(Request.CONTENT_TYPE_HEADER);
+				String contentType="application/json";
 				view = new TwitterFeedView(TwitterUser.get(userId), contentType);
 				return new Response(200, contentType, view.toString());
 			} else if(request.getMethod().equalsIgnoreCase("HEAD")){

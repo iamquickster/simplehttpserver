@@ -33,4 +33,7 @@ public class TwitterFeedItem implements Comparable<TwitterFeedItem>{
 	static long nextId() {
 		return nextId ++;
 	}
+	public String getOwner(){
+		return owner.getName();
+	}
 }

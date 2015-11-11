@@ -19,6 +19,14 @@ public class TwitterTweet extends TwitterFeedItem{
 		super(twitterUser, new Date());
 		this.setMessage(message);
 	}
+	
+	public Date getDate(){
+		return postDate;
+	}
+	
+	public String getMessage(){
+		return message;
+	}
 
 
 	

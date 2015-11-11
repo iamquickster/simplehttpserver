@@ -58,7 +58,7 @@ public class Response {
 		this();
 		this.responseLine = this.responseLines.get(code);
 		this.headers.put(CONTENT_TYPE_HEADER, contentType);
-		this.headers.put(CONTENT_LENGTH_HEADER, Integer.toString(content.getBytes().length));
+		this.headers.put(CONTENT_LENGTH_HEADER, String.valueOf(content.getBytes().length));
 		this.headers.put(DATE_HEADER, rfc1123.format(new Date()));
 		this.body = content;
 	}

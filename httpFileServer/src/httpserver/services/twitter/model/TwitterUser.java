@@ -7,24 +7,25 @@ import java.util.List;
 
 public class TwitterUser {
 	private static int nextId;
-	private static HashMap<Long, TwitterUser> users = loadUserData();
+	private static HashMap<String, TwitterUser> users = loadUserData();
 	private List<TwitterTweet> tweets = new ArrayList<TwitterTweet>();
 	private List<TwitterRetweet> retweets = new ArrayList<TwitterRetweet>();
 	private List<TwitterUser> followees = new ArrayList<TwitterUser>();
-	private long id;
+	private String id;
 	private String name;
 	
-	public TwitterUser(String name) {
-		this.id = TwitterUser.nextId();
+	public TwitterUser(String name,String username) {
+		this.id= username;
+		//this.id = TwitterUser.nextId();
 		this.name = name;
 	}
 
-	private static HashMap<Long, TwitterUser> loadUserData() {
-		HashMap<Long, TwitterUser> result = new HashMap<Long,TwitterUser>();
+	private static HashMap<String, TwitterUser> loadUserData() {
+		HashMap<String, TwitterUser> result = new HashMap<String,TwitterUser>();
 		
-		TwitterUser good = new TwitterUser("The Good");
-		TwitterUser bad = new TwitterUser("The Bad");
-		TwitterUser ugly = new TwitterUser("The Ugly");
+		TwitterUser good = new TwitterUser("The Good","theGood");
+		TwitterUser bad = new TwitterUser("The Bad","theBad");
+		TwitterUser ugly = new TwitterUser("The Ugly","theUgly");
 		
 		TwitterTweet clint = good.tweet("I am Clint Eastwood!");
 		TwitterTweet vanCleef = bad.tweet("I am Lee Van Cleef!");
@@ -37,6 +38,9 @@ public class TwitterUser {
 		ugly.retweet(clint);
 		ugly.retweet(vanCleef);
 		
+		result.put(good.id, good);
+		result.put(bad.id, bad);
+		result.put(ugly.id, ugly);
 		return result;
 	}
 
@@ -76,7 +80,9 @@ public class TwitterUser {
 	}
 	
 	public TwitterRetweet retweet(TwitterTweet tweet) {
-		return new TwitterRetweet(this, tweet);
+		TwitterRetweet result = new TwitterRetweet(this, tweet);
+		this.retweets.add(result);
+		return result;
 	}
 	
 	public boolean removeRetweet(long id){
@@ -97,7 +103,7 @@ public class TwitterUser {
 		this.followees.add(user);
 	}
 	
-	public void unsubcribe(long userId) {
+	public void unsubcribe(String userId) {
 		for(int i = 0 ; i < followees.size(); i++ ) {
 			if(followees.get(i).getId() == userId) {
 				followees.remove(i);
@@ -106,10 +112,13 @@ public class TwitterUser {
 		}
 	}
 
-	private long getId() {
+	private String getId() {
 		return this.id;
 	}
 
+	public String getName() {
+		return name;
+	}
 
 	public static TwitterUser get(String userId) {
 		return users .get(userId);

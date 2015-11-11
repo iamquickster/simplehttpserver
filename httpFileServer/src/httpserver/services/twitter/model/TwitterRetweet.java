@@ -11,4 +11,8 @@ public class TwitterRetweet extends TwitterFeedItem{
 		super(owner, new Date());
 		this.originalTweet = tweet;
 	}
+	
+	public TwitterTweet getOriginalTweet(){
+		return originalTweet;
+	}
 }
