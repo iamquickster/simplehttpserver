@@ -1,6 +1,8 @@
 package httpserver;
 
 
+import httpserver.services.twitter.controller.TwitterUserController;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -43,7 +45,7 @@ public class HttpServer {
 			
 		}
 
-
+		server.registerController(new TwitterUserController());
 		server.start();
 
 	}

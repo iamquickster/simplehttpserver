@@ -111,7 +111,7 @@ public class TwitterUser {
 	}
 
 
-	public static TwitterUser get(long userId) {
+	public static TwitterUser get(String userId) {
 		return users .get(userId);
 	}
 	

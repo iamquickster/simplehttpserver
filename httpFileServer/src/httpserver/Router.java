@@ -1,10 +1,11 @@
 package httpserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Router {
 
-	private List<Controller> routes;
+	private List<Controller> routes = new ArrayList<Controller>();
 	
 	private ResponseFactory responseFactory = ResponseFactory.newInstance();
 

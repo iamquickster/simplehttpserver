@@ -22,8 +22,8 @@ public class TwitterUserController implements Controller {
 		
 		String[] urlTokens = request.getUri().split("/");
 		
-		long userId = Long.parseLong(urlTokens[1]);
-		String userResource = urlTokens[2];
+		String userId = urlTokens[2];
+		String userResource = urlTokens[3];
 		
 		View view = null;
 		Response response = null;

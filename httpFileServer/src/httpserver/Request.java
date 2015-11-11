@@ -44,10 +44,12 @@ public class Request {
 			this.method = requestLineTokens[0];
 			String[] uriTokens = requestLineTokens[1].split("\\?");
 			this.uri = uriTokens[0];
-			String[] paramsToken = uriTokens[1].split("&");
-			for(String sParam: paramsToken) {
-				String[] param = sParam.split("=");
-				this.params.put(param[0], param[1]);
+			if(uriTokens.length>1){
+				String[] paramsToken = uriTokens[1].split("&");
+				for(String sParam: paramsToken) {
+					String[] param = sParam.split("=");
+					this.params.put(param[0], param[1]);
+				}
 			}
 			
 			this.version = requestLineTokens[2];
