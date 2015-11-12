@@ -1,5 +1,8 @@
 package httpserver.services.twitter.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import httpserver.Controller;
 import httpserver.Request;
 import httpserver.Response;
@@ -10,8 +13,8 @@ import httpserver.services.twitter.model.TwitterRetweet;
 import httpserver.services.twitter.model.TwitterTweet;
 import httpserver.services.twitter.model.TwitterUser;
 import httpserver.services.twitter.view.TwitterFeedView;
+import httpserver.services.twitter.view.TwitterFolloweesView;
 import httpserver.services.twitter.view.TwitterRetweetsView;
-import httpserver.services.twitter.view.TwitterTweetView;
 import httpserver.services.twitter.view.TwitterTweetsView;
 
 public class TwitterUserController implements Controller {
@@ -60,7 +63,7 @@ public class TwitterUserController implements Controller {
 
 			// Post tweet
 			if (request.getMethod().equals("POST")) {
-				if (urlTokens.length == 3) {
+				if (urlTokens.length == 4) {
 					long tweetId = user.tweet(request.getContent()).getId();
 					response = responseFactory.createResponse(201);
 					response.setHeader("Location", request.getUri() + "/" + tweetId);
@@ -72,23 +75,25 @@ public class TwitterUserController implements Controller {
 
 			// GET tweet
 			if (request.getMethod().equals("GET")) {
-				if (urlTokens.length == 3) {
+				if (urlTokens.length == 4) {
 
 					view = new TwitterTweetsView(user.getTweets(), "text/json");
 					return new Response(200, "text/json", view.toString());
 
 				}
-				if (urlTokens.length == 4) {
+				if (urlTokens.length == 5) {
 
-					long tweetId = Long.parseLong(urlTokens[3]);
+					List<TwitterTweet> tweets = new ArrayList<TwitterTweet>();
+					long tweetId = Long.parseLong(urlTokens[4]);
 					TwitterTweet tweet = null;
 					for (TwitterTweet i : user.getTweets()) {
 						if (i.getId() == tweetId) {
 							tweet = i;
+							tweets.add(i);
 							break;
 						}
 					}
-					view = new TwitterTweetView(tweet, "text/json");
+					view = new TwitterTweetsView(tweets, "text/json");
 					return new Response(200, "text/json", view.toString());
 
 				} else {
@@ -156,6 +161,30 @@ public class TwitterUserController implements Controller {
 			// GET retweets - returns representation of the retweets of a user
 			// if an tweetid is provided only that tweet is returned (not in a list)
 			if (request.getMethod().equals("GET")) {
+				// GET tweet
+				
+				if (urlTokens.length == 4) {
+
+					view = new TwitterRetweetsView(user.getRetweets(), "text/json");
+					return new Response(200, "text/json", view.toString());
+
+				}
+				if (urlTokens.length == 5) {
+					List<TwitterRetweet> retweets = new ArrayList<TwitterRetweet>();
+					long tweetId = Long.parseLong(urlTokens[4]);
+					for (TwitterRetweet i : user.getRetweets()) {
+						if (i.getId() == tweetId) {
+							retweets.add(i);
+							break;
+						}
+					}
+					view = new TwitterRetweetsView(retweets, "text/json");
+					return new Response(200, "text/json", view.toString());
+
+				} else {
+					return responseFactory.createResponse(404);
+				}
+				
 
 			} else
 
@@ -171,7 +200,23 @@ public class TwitterUserController implements Controller {
 
 		} else if (userResource.equals("abonnements")) {
 
-			// TODO GET
+			if (request.getMethod().equals("GET")) {
+				if (urlTokens.length == 4) {
+					view = new TwitterFolloweesView(user.getFollowees(), "text/json");
+					return new Response(200, "text/json", view.toString());
+				}else if(urlTokens.length == 5){
+					List<TwitterUser> folowees = new ArrayList<TwitterUser>();
+					String UserId = urlTokens[4];
+					for (TwitterUser i : user.getFollowees()) {
+						if (i.getId().equals(UserId) ) {
+							folowees.add(i);
+							break;
+						}
+					}
+					view = new TwitterFolloweesView(folowees, "text/json");
+					return new Response(200, "text/json", view.toString());
+				}
+			}
 
 			// TODO DELETE
 

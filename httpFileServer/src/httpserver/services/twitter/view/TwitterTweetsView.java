@@ -16,9 +16,18 @@ public class TwitterTweetsView extends View {
 	}
 	
 	public String toString() {
-		// TODO return json representation of the user tweets
-		// Note : call toJson on model objects
-		return "";
+		String result="{\"tweets\":[";
+		for(int i=0;i<tweets.size();i++){
+			result+="{ \"tweet\":{";
+			result+="\"owner\": \""+tweets.get(i).getOwner()+"\",";
+			result+="\"message\": \""+tweets.get(i).getMessage()+"\",";
+			result+="\"date\": \""+tweets.get(i).getDate().toString()+"\"";
+			result+="}}";
+			if(i<tweets.size()-1)
+				result+=",";
+		}
+		result+="]}";
+		return result;
 	}
 
 }

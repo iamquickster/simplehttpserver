@@ -38,6 +38,10 @@ public class TwitterUser {
 		ugly.retweet(clint);
 		ugly.retweet(vanCleef);
 		
+		ugly.follow(good);
+		ugly.follow(bad);
+		good.follow(ugly);
+		
 		result.put(good.id, good);
 		result.put(bad.id, bad);
 		result.put(ugly.id, ugly);
@@ -112,7 +116,7 @@ public class TwitterUser {
 		}
 	}
 
-	private String getId() {
+	public String getId() {
 		return this.id;
 	}
 

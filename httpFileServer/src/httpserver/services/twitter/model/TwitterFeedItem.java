@@ -22,6 +22,7 @@ public abstract class TwitterFeedItem implements Comparable<TwitterFeedItem>, Js
 		this.postDate = date;
 		this.owner = twitterUser;
 		TwitterFeedItem.items.put(id, this);
+		id=nextId();
 	}
 
 
