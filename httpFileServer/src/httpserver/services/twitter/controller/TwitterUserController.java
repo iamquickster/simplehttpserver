@@ -153,9 +153,24 @@ public class TwitterUserController implements Controller {
 
 		} else if (userResource.equals("retweets")) {
 
-			// TODO Post retweet - adds a retweet to user profile
 			if (request.getMethod().equals("POST")) {
-
+				long tweetId = Long.parseLong(urlTokens[4]);
+				boolean retweeted=false;
+				for (TwitterRetweet i : user.getRetweets()) {
+					retweeted=i.getOriginalTweet().getId() == tweetId;
+					if (retweeted) {							
+						break;
+					}
+				}
+				if(!retweeted){
+					try{
+						user.retweet((TwitterTweet)TwitterFeedItem.get(tweetId));		
+					}catch(Exception e){
+						
+					}
+				}
+				view = new TwitterRetweetsView(user.getRetweets(), "text/json");
+				return new Response(200, "text/json", view.toString());
 			} else
 
 			// GET retweets - returns representation of the retweets of a user
@@ -181,16 +196,24 @@ public class TwitterUserController implements Controller {
 					view = new TwitterRetweetsView(retweets, "text/json");
 					return new Response(200, "text/json", view.toString());
 
-				} else {
+				}else {
 					return responseFactory.createResponse(404);
 				}
 				
 
 			} else
 
-			// TODO DELETE - deletes the retweet in the url
+			
 			if (request.getMethod().equals("DELETE")) {
-
+				long tweetId = Long.parseLong(urlTokens[4]);
+				for (TwitterRetweet i : user.getRetweets()) {
+					if (i.getId() == tweetId) {
+						user.getRetweets().remove(i);
+						break;
+					}
+				}
+				view = new TwitterRetweetsView(user.getRetweets(), "text/json");
+				return new Response(200, "text/json", view.toString());
 			} else
 
 			// TODO PUT - replaces the body of a retweet by the body of the request
@@ -216,11 +239,40 @@ public class TwitterUserController implements Controller {
 					view = new TwitterFolloweesView(folowees, "text/json");
 					return new Response(200, "text/json", view.toString());
 				}
+			}else if (request.getMethod().equals("DELETE")) {			
+				if(urlTokens.length == 5){
+					String UserId = urlTokens[4];
+					for (TwitterUser i : user.getFollowees()) {
+						if (i.getId().equals(UserId) ) {
+							user.getFollowees().remove(i);
+							break;
+						}
+					}
+					view = new TwitterFolloweesView(user.getFollowees(), "text/json");
+					return new Response(200, "text/json", view.toString());
+				}
 			}
 
-			// TODO DELETE
-
-			// TODO PUT
+			else if(request.getMethod().equals("PUT")){
+				String UserId = urlTokens[4];
+				boolean follow=false;
+				for (TwitterUser i : user.getFollowees()) {
+					if (i.getId().equals(UserId) ) {
+						follow=true;
+						break;
+					}
+				}
+				if(!follow){
+					for (TwitterUser i : TwitterUser.getUsers()) {
+						if (i.getId().equals(UserId) ) {
+							user.getFollowees().add(i);
+							break;
+						}
+					}
+				}
+				view = new TwitterFolloweesView(user.getFollowees(), "text/json");
+				return new Response(200, "text/json", view.toString());
+			}
 
 		}
 

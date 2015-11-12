@@ -19,6 +19,9 @@ public class TwitterUser {
 		//this.id = TwitterUser.nextId();
 		this.name = name;
 	}
+	public static List<TwitterUser> getUsers(){
+		return new ArrayList<TwitterUser>(users.values());
+	}
 
 	private static HashMap<String, TwitterUser> loadUserData() {
 		HashMap<String, TwitterUser> result = new HashMap<String,TwitterUser>();
