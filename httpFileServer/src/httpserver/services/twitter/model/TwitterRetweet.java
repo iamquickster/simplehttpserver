@@ -2,6 +2,7 @@ package httpserver.services.twitter.model;
 
 import java.util.Date;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 
@@ -21,7 +22,13 @@ public class TwitterRetweet extends TwitterFeedItem{
 
 	@Override
 	public JsonObject toJson() {
-		// TODO Converts this object to json
-		return null;
+		return Json.createObjectBuilder().add("id", super.getId()).add("owner", super.getOwner()).add("date", super.postDate.toString())
+				.add("tweet", originalTweet.toJson()).build();
+	}
+
+
+	@Override
+	public String getLink() {
+		return "/utilisateur/" + super.getOwner() + "/retweets/" + super.getId();
 	}
 }

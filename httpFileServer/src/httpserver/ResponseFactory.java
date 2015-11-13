@@ -16,6 +16,8 @@ public class ResponseFactory {
 		switch (i) {
 		case 200:
 			return new Response(200, Response.HTML_CONTENT_TYPE, "<h1>200 ok</h1>");
+		case 201:
+			return new Response(201, Response.HTML_CONTENT_TYPE, "<h1>201 Created</h1>");
 		case 400:
 			return new Response(400, Response.HTML_CONTENT_TYPE, "<h1>400 Bad Request</h1>");
 		case 403:
@@ -23,7 +25,7 @@ public class ResponseFactory {
 		case 404:
 			return new Response(404,  Response.HTML_CONTENT_TYPE, "<h1>404 Not Found</h1>");
 		case 405:
-			return new Response(405,  Response.HTML_CONTENT_TYPE, "<h1>404 Method not allowed</h1>");
+			return new Response(405,  Response.HTML_CONTENT_TYPE, "<h1>405 Method not allowed</h1>");
 		default:
 			return new Response(404,  Response.HTML_CONTENT_TYPE, "<h1>404 Not Found</h1>");
 		}

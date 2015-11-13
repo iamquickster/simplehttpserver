@@ -13,8 +13,11 @@ import httpserver.services.twitter.model.TwitterRetweet;
 import httpserver.services.twitter.model.TwitterTweet;
 import httpserver.services.twitter.model.TwitterUser;
 import httpserver.services.twitter.view.TwitterFeedView;
+import httpserver.services.twitter.view.TwitterFolloweeView;
 import httpserver.services.twitter.view.TwitterFolloweesView;
+import httpserver.services.twitter.view.TwitterRetweetView;
 import httpserver.services.twitter.view.TwitterRetweetsView;
+import httpserver.services.twitter.view.TwitterTweetView;
 import httpserver.services.twitter.view.TwitterTweetsView;
 
 public class TwitterUserController implements Controller {
@@ -30,26 +33,29 @@ public class TwitterUserController implements Controller {
 	public Response action(Request request) {
 
 		String[] urlTokens = request.getUri().split("/");
-		
+		// /utilisateur/ not valid
+		if(urlTokens.length == 2) {
+			return responseFactory.createResponse(404);
+		}
 		String userId = urlTokens[2];
+		// /utilisateur/{userId}/ not valid
+		if(urlTokens.length == 3) {
+			return responseFactory.createResponse(404);
+		}
+		
 		String userResource = urlTokens[3];
 	
 
 		TwitterUser user = TwitterUser.get(userId);
-
+		
+		// user does not exist
+		if(user == null ) {
+			return responseFactory.createResponse(404);
+		}
+		
 		View view = null;
 		Response response = null;
 
-		/*
-		if(userResource.equals("fil")) {
-			if(request.getMethod().equalsIgnoreCase("GET")){
-				//String contentType= request.getHeaders().get(Request.CONTENT_TYPE_HEADER);
-				String contentType="application/json";
-				view = new TwitterFeedView(TwitterUser.get(userId), contentType);
-				return new Response(200, contentType, view.toString());
-			} else if(request.getMethod().equalsIgnoreCase("HEAD")){
-
-*/
 		if (userResource.equals("fil")) {
 			if (request.getMethod().equalsIgnoreCase("GET")) {
 				view = new TwitterFeedView(TwitterUser.get(userId), "text/json");
@@ -66,12 +72,12 @@ public class TwitterUserController implements Controller {
 				if (urlTokens.length == 4) {
 					long tweetId = user.tweet(request.getContent()).getId();
 					response = responseFactory.createResponse(201);
-					response.setHeader("Location", request.getUri() + "/" + tweetId);
+					response.setHeader("Location", request.getUri() + tweetId);
 					return response;
 				} else {
-					return responseFactory.createResponse(404);
+					return responseFactory.createResponse(405);
 				}
-			}
+			} else
 
 			// GET tweet
 			if (request.getMethod().equals("GET")) {
@@ -85,27 +91,27 @@ public class TwitterUserController implements Controller {
 
 					List<TwitterTweet> tweets = new ArrayList<TwitterTweet>();
 					long tweetId = Long.parseLong(urlTokens[4]);
-					TwitterTweet tweet = null;
 					for (TwitterTweet i : user.getTweets()) {
 						if (i.getId() == tweetId) {
-							tweet = i;
-							tweets.add(i);
+							view = new TwitterTweetView(i, "text/json");
 							break;
 						}
 					}
-					view = new TwitterTweetsView(tweets, "text/json");
+					if(view == null ) { 
+						return responseFactory.createResponse(404);
+					}
 					return new Response(200, "text/json", view.toString());
 
 				} else {
 					return responseFactory.createResponse(404);
 				}
-			}
+			} else 
 
 			// DELETE - delete a tweet
 			if (request.getMethod().equals("DELETE")) {
-				if (urlTokens.length == 4) {
+				if (urlTokens.length == 5) {
 
-					long tweetId = Long.parseLong(urlTokens[3]);
+					long tweetId = Long.parseLong(urlTokens[4]);
 					int i = 0;
 					for (i = 0; i < user.getTweets().size(); i++) {
 						if (user.getTweets().get(i).getId() == tweetId) {
@@ -124,16 +130,17 @@ public class TwitterUserController implements Controller {
 				} else {
 					return responseFactory.createResponse(404);
 				}
-			}
+			} else
 
 			// PUT - modify a tweet
 			if (request.getMethod().equals("PUT")) {
-				if (urlTokens.length == 4) {
+				if (urlTokens.length == 5) {
 
-					long tweetId = Long.parseLong(urlTokens[3]);
+					long tweetId = Long.parseLong(urlTokens[4]);
 					int i = 0;
 					for (i = 0; i < user.getTweets().size(); i++) {
 						if (user.getTweets().get(i).getId() == tweetId) {
+							user.getTweets().get(i).setMessage(request.getContent());
 							break;
 						}
 					}
@@ -141,36 +148,24 @@ public class TwitterUserController implements Controller {
 						return responseFactory.createResponse(404);
 					} else {
 
-						TwitterTweet modifiedTweet = new TwitterTweet(user, request.getContent());
-						user.getTweets().set(i, modifiedTweet);
 						return responseFactory.createResponse(200);
 
 					}
 				} else {
 					return responseFactory.createResponse(404);
 				}
+			} else {
+				return responseFactory.createResponse(405);
 			}
 
 		} else if (userResource.equals("retweets")) {
 
 			if (request.getMethod().equals("POST")) {
-				long tweetId = Long.parseLong(urlTokens[4]);
-				boolean retweeted=false;
-				for (TwitterRetweet i : user.getRetweets()) {
-					retweeted=i.getOriginalTweet().getId() == tweetId;
-					if (retweeted) {							
-						break;
-					}
-				}
-				if(!retweeted){
-					try{
-						user.retweet((TwitterTweet)TwitterFeedItem.get(tweetId));		
-					}catch(Exception e){
-						
-					}
-				}
-				view = new TwitterRetweetsView(user.getRetweets(), "text/json");
-				return new Response(200, "text/json", view.toString());
+				long tweetId = Long.parseLong(request.getParams().get("tweetId"));
+				user.retweet((TwitterTweet) TwitterTweet.get(tweetId));
+				response = responseFactory.createResponse(201);
+				response.setHeader("Location", request.getUri() + tweetId);
+				return response;
 			} else
 
 			// GET retweets - returns representation of the retweets of a user
@@ -185,15 +180,8 @@ public class TwitterUserController implements Controller {
 
 				}
 				if (urlTokens.length == 5) {
-					List<TwitterRetweet> retweets = new ArrayList<TwitterRetweet>();
 					long tweetId = Long.parseLong(urlTokens[4]);
-					for (TwitterRetweet i : user.getRetweets()) {
-						if (i.getId() == tweetId) {
-							retweets.add(i);
-							break;
-						}
-					}
-					view = new TwitterRetweetsView(retweets, "text/json");
+					view = new TwitterRetweetView((TwitterRetweet) TwitterRetweet.get(tweetId), "text/json");
 					return new Response(200, "text/json", view.toString());
 
 				}else {
@@ -212,14 +200,11 @@ public class TwitterUserController implements Controller {
 						break;
 					}
 				}
-				view = new TwitterRetweetsView(user.getRetweets(), "text/json");
-				return new Response(200, "text/json", view.toString());
-			} else
-
-			// TODO PUT - replaces the body of a retweet by the body of the request
-			if (request.getMethod().equals("PUT")) {
-				
+				return responseFactory.createResponse(200);
+			} else {
+				return responseFactory.createResponse(405);
 			}
+
 
 		} else if (userResource.equals("abonnements")) {
 
@@ -228,18 +213,19 @@ public class TwitterUserController implements Controller {
 					view = new TwitterFolloweesView(user.getFollowees(), "text/json");
 					return new Response(200, "text/json", view.toString());
 				}else if(urlTokens.length == 5){
-					List<TwitterUser> folowees = new ArrayList<TwitterUser>();
 					String UserId = urlTokens[4];
 					for (TwitterUser i : user.getFollowees()) {
 						if (i.getId().equals(UserId) ) {
-							folowees.add(i);
+							view = new TwitterFolloweeView(i, "text/json");
 							break;
 						}
 					}
-					view = new TwitterFolloweesView(folowees, "text/json");
+					if(view == null) {
+						return responseFactory.createResponse(404);
+					}
 					return new Response(200, "text/json", view.toString());
 				}
-			}else if (request.getMethod().equals("DELETE")) {			
+			}else if (request.getMethod().equals("DELETE")) {		
 				if(urlTokens.length == 5){
 					String UserId = urlTokens[4];
 					for (TwitterUser i : user.getFollowees()) {
@@ -248,8 +234,7 @@ public class TwitterUserController implements Controller {
 							break;
 						}
 					}
-					view = new TwitterFolloweesView(user.getFollowees(), "text/json");
-					return new Response(200, "text/json", view.toString());
+					return responseFactory.createResponse(200);
 				}
 			}
 
@@ -270,13 +255,14 @@ public class TwitterUserController implements Controller {
 						}
 					}
 				}
-				view = new TwitterFolloweesView(user.getFollowees(), "text/json");
-				return new Response(200, "text/json", view.toString());
+				return responseFactory.createResponse(200);
+			} else {
+				return responseFactory.createResponse(405);
 			}
 
 		}
 
-		return null;
+		return responseFactory.createResponse(404);
 	}
 
 }

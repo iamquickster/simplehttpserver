@@ -2,6 +2,9 @@ package httpserver.services.twitter.view;
 
 import java.util.List;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+
 import httpserver.View;
 import httpserver.services.twitter.model.TwitterTweet;
 
@@ -16,18 +19,11 @@ public class TwitterTweetsView extends View {
 	}
 	
 	public String toString() {
-		String result="{\"tweets\":[";
-		for(int i=0;i<tweets.size();i++){
-			result+="{ \"tweet\":{";
-			result+="\"owner\": \""+tweets.get(i).getOwner()+"\",";
-			result+="\"message\": \""+tweets.get(i).getMessage()+"\",";
-			result+="\"date\": \""+tweets.get(i).getDate().toString()+"\"";
-			result+="}}";
-			if(i<tweets.size()-1)
-				result+=",";
+		JsonArrayBuilder builder = Json.createArrayBuilder();
+		for (TwitterTweet tweet : tweets){
+			builder.add(tweet.toJson());
 		}
-		result+="]}";
-		return result;
+		return builder.build().toString();
 	}
 
 }

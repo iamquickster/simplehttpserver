@@ -7,9 +7,10 @@ import java.util.Map;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
+import httpserver.HyperMedia;
 import httpserver.JsonSerializable;
 
-public abstract class TwitterFeedItem implements Comparable<TwitterFeedItem>, JsonSerializable{
+public abstract class TwitterFeedItem implements Comparable<TwitterFeedItem>, JsonSerializable, HyperMedia{
 	
 	private static int nextId = 1;
 	private static Map<Long, TwitterFeedItem> items = new HashMap<Long, TwitterFeedItem>();
