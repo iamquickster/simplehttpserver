@@ -3,7 +3,6 @@ package httpserver.services.twitter.model;
 import java.util.Date;
 
 import javax.json.Json;
-import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
 
 public class TwitterTweet extends TwitterFeedItem {

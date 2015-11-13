@@ -4,9 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.json.JsonObject;
-import javax.json.JsonValue;
-
 import httpserver.HyperMedia;
 import httpserver.JsonSerializable;
 

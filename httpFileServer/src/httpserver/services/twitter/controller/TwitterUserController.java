@@ -8,7 +8,6 @@ import httpserver.Request;
 import httpserver.Response;
 import httpserver.ResponseFactory;
 import httpserver.View;
-import httpserver.services.twitter.model.TwitterFeedItem;
 import httpserver.services.twitter.model.TwitterRetweet;
 import httpserver.services.twitter.model.TwitterTweet;
 import httpserver.services.twitter.model.TwitterUser;

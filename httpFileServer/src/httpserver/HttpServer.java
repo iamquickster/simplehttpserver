@@ -1,15 +1,11 @@
 package httpserver;
 
 
-import httpserver.services.twitter.controller.TwitterUserController;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 import httpserver.services.twitter.controller.TwitterUserController;
 
