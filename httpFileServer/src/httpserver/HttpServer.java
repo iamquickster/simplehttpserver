@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import httpserver.services.resources.ResourceController;
 import httpserver.services.twitter.controller.TwitterUserController;
 
 /*
@@ -44,6 +45,7 @@ public class HttpServer {
 		}
 		
 		server.registerController(new TwitterUserController());
+		server.registerController(new ResourceController());
 
 		server.start();
 

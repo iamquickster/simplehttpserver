@@ -1,4 +1,4 @@
-package other;
+package httpserver.services.resources;
 import httpserver.Controller;
 import httpserver.Request;
 import httpserver.Response;
@@ -28,11 +28,11 @@ public class ResourceController implements Controller {
 		if(!request.getMethod().equals("GET")) {
 			return false;
 		}
-		if(request.getUri().matches("\\/*")) {
+		if(!request.getUri().startsWith("/resources/")) {
 			return false;
 		}
 		System.out.println("Path veryfied: " + RESOURCE_DIR + request.getUri());
-		return this.getClass().getResource(RESOURCE_DIR + request.getUri())!=null;
+		return this.getClass().getResource(request.getUri())!=null;
 	}
 	/*
 	 * Retourne une reponse HTTP contenant le fichier pointer par l'url de la 
@@ -44,7 +44,7 @@ public class ResourceController implements Controller {
 	public Response action(Request request) {
 		
 		// get resource
-		InputStream resourceStream = this.getClass().getResourceAsStream(RESOURCE_DIR + request.getUri());
+		InputStream resourceStream = this.getClass().getResourceAsStream(request.getUri());
 		
 		
 		if (resourceStream == null) {
@@ -56,7 +56,7 @@ public class ResourceController implements Controller {
 			String contentLine = contentStream.readLine();
 			String content = "";
 			while (contentLine != null) {
-				content += contentLine;
+				content += contentLine + "\n";
 				contentLine = contentStream.readLine();
 			}
 			
