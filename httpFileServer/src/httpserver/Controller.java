@@ -10,7 +10,7 @@ public interface Controller {
 	 * si non faux
 	 */
 	public boolean accept(Request request);
-	
+	  
 	/*
 	 * CETTE METHOD DOIT ETRE UTILISER APRES AVOIR ÉTÉ VALIDER PAR accept()
 	 * Crée un réponse HTTP pour la requete "request"
