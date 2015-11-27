@@ -28,10 +28,15 @@ public class ResourceController implements Controller {
 		if(!request.getMethod().equals("GET")) {
 			return false;
 		}
-		if(!request.getUri().startsWith("/resources/")) {
+		if(!request.getUri().equals("/index.html") || !request.getUri().equals("/")) {
+			return true;
+		}
+		
+		if( !request.getUri().startsWith("/resources/")) {
 			return false;
 		}
-		System.out.println("Path veryfied: " + RESOURCE_DIR + request.getUri());
+		
+		System.out.println("Path veryfied: " + request.getUri());
 		return this.getClass().getResource(request.getUri())!=null;
 	}
 	/*
@@ -44,7 +49,11 @@ public class ResourceController implements Controller {
 	public Response action(Request request) {
 		
 		// get resource
-		InputStream resourceStream = this.getClass().getResourceAsStream(request.getUri());
+		String resource = request.getUri();
+		if(resource.equals("/") ) {
+			resource = "/index.html";
+		}
+		InputStream resourceStream = this.getClass().getResourceAsStream(resource);
 		
 		
 		if (resourceStream == null) {

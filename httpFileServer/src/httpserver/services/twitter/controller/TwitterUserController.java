@@ -18,6 +18,7 @@ import httpserver.services.twitter.view.TwitterRetweetView;
 import httpserver.services.twitter.view.TwitterRetweetsView;
 import httpserver.services.twitter.view.TwitterTweetView;
 import httpserver.services.twitter.view.TwitterTweetsView;
+import httpserver.services.twitter.view.TwitterUserSearchSuggestionView;
 
 public class TwitterUserController implements Controller {
 
@@ -47,13 +48,14 @@ public class TwitterUserController implements Controller {
 
 		TwitterUser user = TwitterUser.get(userId);
 		
-		// user does not exist
-		if(user == null ) {
-			return responseFactory.createResponse(404);
-		}
-		
 		View view = null;
 		Response response = null;
+
+		// user does not exist
+		if(user == null ) {
+			view = new TwitterUserSearchSuggestionView(TwitterUser.search(userId), "text/json");
+			return new Response(200, "text/json", view.toString());
+		}
 
 		if (userResource.equals("fil")) {
 			if (request.getMethod().equalsIgnoreCase("GET")) {

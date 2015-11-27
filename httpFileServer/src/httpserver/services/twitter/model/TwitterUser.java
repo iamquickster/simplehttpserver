@@ -151,4 +151,15 @@ public class TwitterUser implements JsonSerializable, HyperMedia {
 		return "/utilisateurs/" + name ;
 	}
 
+	public static List<TwitterUser> search(String userId) {
+		List<TwitterUser> result = new ArrayList<TwitterUser>();
+		
+		for (String userName : TwitterUser.users.keySet()) {
+			if(userName.contains(userId)) { 
+				result.add(users.get(userName));
+			}
+		}
+		return result;
+	}
+
 }
