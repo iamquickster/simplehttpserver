@@ -2,14 +2,45 @@
 <html>
 <head>
 	<link rel="stylesheet" href="twitter.css" type="text/css" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="twitter.js"></script>
 </head>
 <body>
-	<div id="menu">
-	<input type="text" name="userId" value="Search user" onfocus="this.value='';" onblur="this.value='Search user'" oninput="getUser(this.value)" />
-	</div>
-	<div id="mainViewPort">
 	
-	</div>
+	<div class="container">
+    	<div class="row">
+  			<div class="col-md-4">
+  				<form class="navbar-form navbar-left" role="search">
+  					<div id="menu">
+						<input type="text" name="userId" value="Search user" onfocus="this.value='';" onblur="this.value='Search user'" oninput="getUser(this.value)" />
+					</div>		
+				</form>
+  			</div>
+		</div>
+		<div class="row">
+  			<div class="col-md-8">
+  				<ul class="nav nav-pills">
+  					<li role="presentation" class="active"><a href="#">Tweets</a></li>
+  					<li role="presentation"><a href="#">Abonnements</a></li>
+				</ul>
+				<ul class="list-group">
+  					<li class="list-group-item">
+    					<p>tweet 1</p>
+
+  					</li>
+  					<li class="list-group-item">
+    					<p>tweet 2</p>
+
+  					</li>
+  					<li class="list-group-item">
+    					<p>tweet 3</p>
+
+  					</li>
+				</ul>
+  			</div>
+		</div>
+
+    </div>	
 </body>
 </html>
