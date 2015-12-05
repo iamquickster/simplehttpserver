@@ -1,3 +1,7 @@
 body {
 	color: blue;
 }
+
+#suggestions *{
+	display:block;
+}
