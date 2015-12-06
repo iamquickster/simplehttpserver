@@ -37,7 +37,7 @@ function loadUser( userName, link ) {
 					if(feed[i].tweet) {
 						document.getElementById("tweets").innerHTML += "<li class='list-group-item reTweet' id=tweetId-" 
 							+ feed[i].id + ">" + feed[i].tweet.date + ":"
-							+ feed[i].owner + "-->" + feed[i].tweet.message 
+							+ feed[i].owner + " RT "+ feed[i].tweet.owner+ " --> " + feed[i].tweet.message 
 							+ "<a onclick=\"deleteTweet(" + feed[i].id+ ")\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
 							+ "</li>";
 					} else {
