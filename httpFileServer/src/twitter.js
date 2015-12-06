@@ -24,7 +24,7 @@ function getUser(userId) {
 
 function loadUser( userName, link ) {
 	document.getElementById("suggestions").innerHTML = "";
-	document.getElementById("user-content").innerHTML = "<div id=\"userName\"><h1>" + userName + "</h1></div>" + document.getElementById("user-content").innerHTML;
+	document.getElementById("user-picked").innerHTML = "<h1>" + userName + "</h1>";
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
