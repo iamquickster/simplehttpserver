@@ -57,7 +57,7 @@ function loadUser( userName, link ) {
 
 function deleteTweet(tweetId) {
 
-	var userName = document.getElementById("userName");
+	var userName = document.getElementById("user-picked");
 	var tweet = document.getElementById("tweetId-" + tweetId);
 	if(tweet.class == "tweet") {
 		var link = "/utilisateurs/" + userName.textContent + "/tweets/" + tweet.getAttribute('id').replace("tweetId-", "");
@@ -75,4 +75,25 @@ function deleteTweet(tweetId) {
 	
 	httpRequest.open('DELETE', link);
 	httpRequest.send();
+}
+
+function createTweet() {
+
+	var userName = document.getElementById("user-picked");
+	var tweet = document.getElementById("newTweet");
+	var link = "/utilisateurs/" + userName.textContent + "/tweets/";
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if(httpRequest.readyState == 4) {
+			if(httpRequest.status == 200) {
+				var feed = JSON.parse(httpRequest.responseText);
+				
+							
+			}
+		}
+	}
+	httpRequest.open('POST', link);
+	httpRequest.send();
+	var link = "/utilisateurs/" + userName.textContent + "/fil/";
+	loadUser( userName.textContent, link );
 }
