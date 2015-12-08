@@ -73,7 +73,7 @@ function loadFollows() {
 				for(var i = 0; i < feed.length ; i++ ) {				
 					document.getElementById("abonnements").innerHTML += "<li class='list-group-item followee' id=followeeId-" 
 						+ feed[i].name + ">" + feed[i].name +
-						"<a onclick=\"unfollow(" + feed[i].name+ ")\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
+						"<a onclick=\"unfollow('" + feed[i].name+ "')\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
 						+ "</li>";
 				}
 				
@@ -103,6 +103,22 @@ function deleteTweet(tweetId) {
 		}
 	}
 	
+	httpRequest.open('DELETE', link);
+	httpRequest.send();
+}
+
+function unfollow(followeeId) {
+	var userName = document.getElementById("user-picked");
+	var followee = document.getElementById("followeeId-" + followeeId);
+	var link = "/utilisateurs/" + userName.textContent + "/abonnements/" + followee.getAttribute('id').replace("followeeId-", "");
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if(httpRequest.readyState == 4) {
+			if(httpRequest.status == 200) {
+				followee.remove();
+			}
+		}
+	}
 	httpRequest.open('DELETE', link);
 	httpRequest.send();
 }
