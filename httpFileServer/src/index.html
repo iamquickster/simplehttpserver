@@ -7,7 +7,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="twitter.js"></script>
 </head>
-<body>
+<body onload="init()">
 	
 	<div id="mainViewPort" class="container">
     	<div class="row">
@@ -15,7 +15,8 @@
   				<form class="navbar-form navbar-left" role="search">
   					<div id="menu">
 						<input type="text" name="userId" value="Search user" onfocus="this.value='';" onblur="this.value='Search user'" oninput="getUser(this.value)" />
-					</div>		
+					</div>
+					<div id='suggestions' class='suggestionList'></div>
 				</form>
   			</div>
 		</div>
@@ -63,8 +64,9 @@
   					<li role="presentation" class="active"><a href="#">Abonnements</a></li>
 				</ul>
 				<ul class="list-group" id="abonnements">
-  					
 				</ul>
+				<input type="text" name="subscribe" value="Search user" onfocus="this.value='';" onblur="this.value='Search user'" oninput="getFollowee(this.value)" />
+				<div id="followSuggestions"></div>
   			</div>
 		</div>
 

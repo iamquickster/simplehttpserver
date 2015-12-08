@@ -5,3 +5,11 @@ body {
 #suggestions *{
 	display:block;
 }
+
+#user-content {
+	display:none;
+}
+
+#followSuggestions * {
+	display:block;
+}

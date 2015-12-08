@@ -1,17 +1,18 @@
-function getUser(userId) {
+function init() {
+}
 
+function getUser(userId) {
 	var users;
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
 			if(httpRequest.status == 200) {
-				document.getElementById("menu").innerHTML += "<div id='suggestions' class='suggestionList'></div>";				
+				document.getElementById("suggestions").innerHTML = "";				
 				users = JSON.parse(httpRequest.responseText);
 				
 				console.log(users);
 				for(var i = 0 ; i < users.length; i++) {
 					document.getElementById("suggestions").innerHTML += "<a href='#' onclick='loadUser(\"" + users[i].name + "\",\"" + users[i].link + "\")'>" + users[i].name +"</a>";
-					
 				}
 				
 			}
@@ -20,6 +21,8 @@ function getUser(userId) {
 	
 	httpRequest.open('GET', '/utilisateurs/' + userId + '/fil/');
 	httpRequest.send();
+	
+	
 }
 function loadUser( userName ) {
 	var link='/utilisateurs/' + userName + '/fil/';
@@ -47,8 +50,6 @@ function loadUser( userName, link ) {
 						document.getElementById("tweets").innerHTML += "<li class='list-group-item tweet' id=\"tweetId-" + feed[i].id + "\">" + feed[i].date + ":" + feed[i].message + "</li>";
 					}
 				}
-				// TODO Create user dashboard
-				// functions : show feed + buttons to tweet and retweet
 				
 			}
 		}
@@ -57,6 +58,7 @@ function loadUser( userName, link ) {
 	httpRequest.open('GET', link);
 	httpRequest.send();
 	loadFollows();
+	document.getElementById("user-content").style.display = "block";
 }
 
 function loadFollows() {
@@ -132,14 +134,51 @@ function createTweet() {
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
 			if(httpRequest.status == 200) {
-				var feed = JSON.parse(httpRequest.responseText);
-				
-							
+				loadUser( userName.textContent, "/utilisateurs/" + userName.textContent + "/fil/" );
 			}
 		}
 	}
 	httpRequest.open('POST', link);
+	httpRequest.send(tweet.value);
+}
+
+function getFollowee(userId) {
+	$('#followSuggestions').empty();
+	var users;
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if(httpRequest.readyState == 4) {
+			if(httpRequest.status == 200) {
+				document.getElementById("followSuggestions").innerHTML = "";				
+				users = JSON.parse(httpRequest.responseText);
+				
+				console.log(users);
+				for(var i = 0 ; i < users.length; i++) {
+					document.getElementById("followSuggestions").innerHTML += "<a href='#' onclick='followUser(\"" + users[i].name + "\")'>" + users[i].name +"</a>";
+				}
+				
+			}
+		}
+	}
+	
+	httpRequest.open('PUT', '/utilisateurs/' + userId + '/fil/');
 	httpRequest.send();
-	var link = "/utilisateurs/" + userName.textContent + "/fil/";
-	loadUser( userName.textContent, link );
+	
+	
+}
+
+function followUser(userId) {
+
+	var userName = document.getElementById("user-picked");
+	var link = "/utilisateurs/" + userName.textContent + "/abonnements/" + userId;
+	var httpRequest = new XMLHttpRequest();
+	httpRequest.onreadystatechange = function() {
+		if(httpRequest.readyState == 4) {
+			if(httpRequest.status == 200) {
+				loadUser( userName.textContent, "/utilisateurs/" + userName.textContent + "/fil/" );
+			}
+		}
+	}
+	httpRequest.open('PUT', link);
+	httpRequest.send();
 }

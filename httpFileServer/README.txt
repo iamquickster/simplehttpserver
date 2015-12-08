@@ -4,11 +4,28 @@ d'obtenir des ressources associées à son compte. L'utilisateur peux faire
 ses requêtes directement avec un fureteur en spécifiant le nom 
 de la ressource. 
 
-Exemple : Localhost:8080/fun.txt
+Exemple : Localhost:8080/index.html
 
-Le format de la ressource retourné est en json si le "body" de la réponse n'est pas vide, sinon un message HTML est retourné.
+Page d'acceuil:
+La page d'acceuil est une interface Ajax qui permet de:
+	Trouver un utilisateur
+	Afficher le fil d'un utilisateur
+	Soumettre un tweet
+	Supprimer un tweet
+	S'abonner à un utilisateur
+	Se désabonner à un utilisateur
 
-Voici l'API REST:
+Les utilisateurs déjà inclus dans le système sont:
+	TheGood
+	TheBad
+	TheUgly
+	
+La logique des appeles AJAX sont dans le fichier twitter.js, et le stylesheet est twitter.css.
+
+La page est accessible de l'url "/index.html".
+
+
+API REST JSON:
 	
 	GET /utilisateurs/{utilisateurId}/fil/
 		Obtient le fil de tweets(feed) de l'utilisateur donne
@@ -81,7 +98,5 @@ Avec Eclipse:
 2. Choisir le répertoire racine httpFileServer
 3. Right Click HttpServer>>Run as Java Application
 	Note: Si vous voulez spécifier un port, ajouter le numéro de port Run Configurations>> Arguments
+4. Ouvrer un fureteur à la page localhost:[port]/index.html
 
-Avec Exécutable:
- Vous pouvez executé le serveur directement en ligne de commande avec le runnable jar fourni:
- 		java -jar tp2_FEOP09088803_RIVN13098901.jar [port]
