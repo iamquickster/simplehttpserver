@@ -1,3 +1,8 @@
+Auteurs:
+	Pascal Feo FEOP09088803
+	Nicolas Rivet Rivn13098901
+	Chakib Tchantchane Tchc25049201
+
 ----------------HttpServer----------------
 Cette application est un serveur Http qui permet à un utilisateur Twitter
 d'obtenir des ressources associées à son compte. L'utilisateur peux faire
