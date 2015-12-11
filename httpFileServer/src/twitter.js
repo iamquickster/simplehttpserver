@@ -47,7 +47,10 @@ function loadUser( userName, link ) {
 							+ "<a onclick=\"deleteTweet(" + feed[i].id+ ")\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
 							+ "</li>";
 					} else {
-						document.getElementById("tweets").innerHTML += "<li class='list-group-item tweet' id=\"tweetId-" + feed[i].id + "\">" + feed[i].date + ":" + feed[i].message + "</li>";
+						document.getElementById("tweets").innerHTML += "<li class='list-group-item tweet' id=\"tweetId-" + feed[i].id 
+							+ "\">" + feed[i].date + ":" + feed[i].message 
+							+ "<a onclick=\"deleteTweet(" + feed[i].id+ ")\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
+							+ "</li>";
 					}
 				}
 				
