@@ -26,19 +26,19 @@ public class TwitterUserController implements Controller {
 
 	@Override
 	public boolean accept(Request request) {
-		return request.getUri().startsWith("/utilisateurs/");
+		return request.getUri().startsWith("/users/");
 	}
 
 	@Override
 	public Response action(Request request) {
 
 		String[] urlTokens = request.getUri().split("/");
-		// /utilisateur/ not valid
+		// /user/ not valid
 		if(urlTokens.length == 2) {
 			return responseFactory.createResponse(404);
 		}
 		String userId = urlTokens[2];
-		// /utilisateur/{userId}/ not valid
+		// /user/{userId}/ not valid
 		if(urlTokens.length == 3) {
 			return responseFactory.createResponse(404);
 		}
@@ -57,7 +57,7 @@ public class TwitterUserController implements Controller {
 			return new Response(200, "text/json", view.toString());
 		}
 
-		if (userResource.equals("fil")) {
+		if (userResource.equals("feed")) {
 			if (request.getMethod().equalsIgnoreCase("GET")) {
 				view = new TwitterFeedView(TwitterUser.get(userId), "text/json");
 				return new Response(200, "text/json", view.toString());
@@ -207,7 +207,7 @@ public class TwitterUserController implements Controller {
 			}
 
 
-		} else if (userResource.equals("abonnements")) {
+		} else if (userResource.equals("followees")) {
 
 			if (request.getMethod().equals("GET")) {
 				if (urlTokens.length == 4) {

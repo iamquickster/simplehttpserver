@@ -1,87 +1,79 @@
 ----------------HttpServer----------------
-Cette application est un serveur Http qui permet à un utilisateur Twitter
-d'obtenir des ressources associées à son compte. L'utilisateur peux faire
-ses requêtes directement avec un fureteur en spécifiant le nom 
-de la ressource. 
 
-Exemple : Localhost:8080/fun.txt
+Authors: Pascal Feo, Chakib TchantChane and Nicolas Rivet
+This applciation is a basic server which show the inner workings of a
+single page website with a REST API. The example implemented here is a
+fictitious twitter account that is able to post and subscribe to other
+users.
+It is not a description of the inner workings of Twitter but an example
+of how to implement a HTTP Server using JAVA.
 
-Le format de la ressource retourné est en json si le "body" de la réponse n'est pas vide, sinon un message HTML est retourné.
-
-Voici l'API REST:
+The API REST:
 	
-	GET /utilisateurs/{utilisateurId}/fil/
-		Obtient le fil de tweets(feed) de l'utilisateur donne
+	GET /users/{userId}/feed/
+		Get user feed
 		
-	GET /utilisateurs/{utilisateurId}/tweets/
+	GET /users/{userId}/tweets/
 		Obtient les tweets de l'utilisateur donné.
 	
-	POST /utilisateurs/{utilisateurId}/tweets/
+	POST /users/{userId}/tweets/
 		Ajoute un nouveau tweet avec le message dans la requete
 	
-	GET /utilisateurs/{utilisateurId}/tweets/{tweetId}/
+	GET /users/{userId}/tweets/{tweetId}/
 		Obtient un des tweet de l'utilisateur donné.
 	
-	DELETE /utilisateurs/{utilisateurId}/tweets/{tweetId}/
+	DELETE /users/{userId}/tweets/{tweetId}/
 		Supprime un des tweet de l'utilisateur donné.
 	
-	PUT /utilisateurs/{utilisateurId}/tweets/{tweetId}/
+	PUT /users/{userId}/tweets/{tweetId}/
 		Modifie un des tweet de l'utilisateur donné.
 		
-	GET /utilisateurs/{utilisateurId}/retweets
+	GET /users/{userId}/retweets
 		Obtient les retweets de l'utilisateur donné.
 	
-	POST /utilisateurs/{utilisateurId}/retweets?tweetId={tweetID}/
+	POST /users/{userId}/retweets?tweetId={tweetID}/
 		Retweet du tweet avec identifiant {tweetId}
 		**TweetId est obligatoire**
 	
-	GET /utilisateurs/{utilisateurId}/retweets/{retweetId}/
+	GET /users/{userId}/retweets/{retweetId}/
 		Obtient un des retweet de l'utilisateur donné.
 	
-	DELETE /utilisateurs/{utilisateurId}/retweets/{retweetId}/
+	DELETE /users/{userId}/retweets/{retweetId}/
 		Supprime un des retweet de l'utilisateur donné.
 		
-	GET /utilisateurs/{utilisateurId}/abonnements/
+	GET /users/{userId}/followees/
 		Obtient les abonnement de l'utilisateur donné.
 		
-	GET /utilisateurs/{utilisateurId}/abonnements/{abonnementId}/
+	GET /users/{userId}/followees/{followeeId}/
 		Obtient un des abonnement de l'utilisateur donné.
 	
-	DELETE /utilisateurs/{utilisateurId}/abonnements/{abonnementId}/
+	DELETE /users/{userId}/followees/{followeeId}/
 		Supprime un des abonnement de l'utilisateur donné.
 	
-	PUT /utilisateurs/{utilisateurId}/abonnements/{abonnementId}/
+	PUT /users/{userId}/followees/{followeeId}/
 		Modifie un des abonnements de l'utilisateur donné.
 	
 
-Le port par défaut du server est 8080 mais il peut être spécifier lors du lancement.
+The port is 8080 by default but it can be specified at launch.
 
-Le serveur utilise un Router qui réparti les requêtes aux Controlleurs. 
-Le Controlleur TwitterUserController est responsable de parser la requêtes et choisir
-la vue associé. Le controlleur cherche les Objets du model nécéssaire et les passe à la vue approrié.
-Ensuite, la vue converti le model en json ( model.toJson() ) et retourne une représentation json
-de l'objet. S'il n'a rien à retourner, une page HTML est retourner avec le statut HTTP.
+The server uses a Router to send the requests to the right Controller. The Controller then
+parses the query and obtains the needed information from the model. the model is passed to
+the view which generates a representation (JSON for REST calls) which is sent to the user.
 
-Les réponses sont générer par ResponseFactory, modifier par le Controlleur et envoyer par le HttpServeur.
+The responses are created with the ResponseFactory.
 
-Un controlleur peu être enregistrer avec la méthode Router.add(Controller),
-Il faut simplement implémenter les méthodes accept() et action() de Controlleur.
+Controllers can be registered through Router.add(Controller)
 
-L'interface HyperMedia permet de définir le lien associé à un object model.
-L'interface JsonSerializable permet de convertir un objet model en JSON.
+The HyperMedia interface allows to associate a link to a model object (HATEOS)
 
-Les données de test sont loader par TwitterUser.loadData(), et peuvent être obtenu
-par la méthode TwitterUser.get(userId) et TwitterFeedItem.get(itemId)
+The test data is loaded with TwitterUser.loadData() and can be obtained via TwitterUser.get(userId)
+and TwitterFeedItem.get(itemId)
 
 ===============Build==================
 
-Avec Eclipse:
+With Eclipse:
 
 1. Import...>>Existing Projects into Workspace
-2. Choisir le répertoire racine httpFileServer
+2. Add javax.json-1.0.jar au BuildPath
 3. Right Click HttpServer>>Run as Java Application
-	Note: Si vous voulez spécifier un port, ajouter le numéro de port Run Configurations>> Arguments
 
-Avec Exécutable:
- Vous pouvez executé le serveur directement en ligne de commande avec le runnable jar fourni:
- 		java -jar tp2_FEOP09088803_RIVN13098901.jar [port]
