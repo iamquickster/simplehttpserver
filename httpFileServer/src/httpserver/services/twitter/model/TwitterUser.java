@@ -53,9 +53,6 @@ public class TwitterUser implements JsonSerializable, HyperMedia {
 		ugly.retweet(clint);
 		ugly.retweet(vanCleef);
 
-		ugly.follow(good);
-		ugly.follow(bad);
-		good.follow(ugly);
 
 		result.put(good.getId(), good);
 		result.put(bad.getId(), bad);

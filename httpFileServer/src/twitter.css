@@ -1,3 +1,15 @@
 body {
 	color: blue;
 }
+
+#suggestions *{
+	display:block;
+}
+
+#user-content {
+	display:none;
+}
+
+#followSuggestions * {
+	display:block;
+}

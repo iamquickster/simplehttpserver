@@ -1,5 +1,11 @@
+Auteurs:
+	Pascal Feo FEOP09088803
+	Nicolas Rivet Rivn13098901
+	Chakib Tchantchane Tchc25049201
+
 ----------------HttpServer----------------
 
+<<<<<<< HEAD
 Authors: Pascal Feo, Chakib TchantChane and Nicolas Rivet
 This applciation is a basic server which show the inner workings of a
 single page website with a REST API. The example implemented here is a
@@ -9,6 +15,30 @@ It is not a description of the inner workings of Twitter but an example
 of how to implement a HTTP Server using JAVA.
 
 The API REST:
+=======
+Exemple : Localhost:8080/index.html
+
+Page d'acceuil:
+La page d'acceuil est une interface Ajax qui permet de:
+	Trouver un utilisateur
+	Afficher le fil d'un utilisateur
+	Soumettre un tweet
+	Supprimer un tweet
+	S'abonner à un utilisateur
+	Se désabonner à un utilisateur
+
+Les utilisateurs déjà inclus dans le système sont:
+	TheGood
+	TheBad
+	TheUgly
+	
+La logique des appeles AJAX sont dans le fichier twitter.js, et le stylesheet est twitter.css.
+
+La page est accessible de l'url "/index.html".
+
+
+API REST JSON:
+>>>>>>> d6441de7509a2fc52aa31d65067d2189c94023c0
 	
 	GET /users/{userId}/feed/
 		Get user feed
@@ -76,4 +106,9 @@ With Eclipse:
 1. Import...>>Existing Projects into Workspace
 2. Add javax.json-1.0.jar au BuildPath
 3. Right Click HttpServer>>Run as Java Application
+<<<<<<< HEAD
+=======
+	Note: Si vous voulez spécifier un port, ajouter le numéro de port Run Configurations>> Arguments
+4. Ouvrer un fureteur à la page localhost:[port]/index.html
+>>>>>>> d6441de7509a2fc52aa31d65067d2189c94023c0
 
