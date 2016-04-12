@@ -1,9 +1,5 @@
-Auteurs:
-	Pascal Feo FEOP09088803
-	Nicolas Rivet Rivn13098901
-	Chakib Tchantchane Tchc25049201
-
 ----------------HttpServer----------------
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 Authors: Pascal Feo, Chakib TchantChane and Nicolas Rivet
@@ -35,10 +31,23 @@ Les utilisateurs déjà inclus dans le système sont:
 La logique des appeles AJAX sont dans le fichier twitter.js, et le stylesheet est twitter.css.
 
 La page est accessible de l'url "/index.html".
+=======
+>>>>>>> be1c63a90dbf6661334b445527fd9ea13c14212d
 
+Authors: Pascal Feo, Chakib TchantChane and Nicolas Rivet
+This applciation is a basic server which show the inner workings of a
+single page website with a REST API. The example implemented here is a
+fictitious twitter account that is able to post and subscribe to other
+users.
+It is not a description of the inner workings of Twitter but an example
+of how to implement a HTTP Server using JAVA.
 
+<<<<<<< HEAD
 API REST JSON:
 >>>>>>> d6441de7509a2fc52aa31d65067d2189c94023c0
+=======
+The API REST:
+>>>>>>> be1c63a90dbf6661334b445527fd9ea13c14212d
 	
 	GET /users/{userId}/feed/
 		Get user feed
@@ -107,8 +116,11 @@ With Eclipse:
 2. Add javax.json-1.0.jar au BuildPath
 3. Right Click HttpServer>>Run as Java Application
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	Note: Si vous voulez spécifier un port, ajouter le numéro de port Run Configurations>> Arguments
 4. Ouvrer un fureteur à la page localhost:[port]/index.html
 >>>>>>> d6441de7509a2fc52aa31d65067d2189c94023c0
+=======
+>>>>>>> be1c63a90dbf6661334b445527fd9ea13c14212d
 
