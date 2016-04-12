@@ -19,13 +19,13 @@ function getUser(userId) {
 		}
 	}
 	
-	httpRequest.open('GET', '/utilisateurs/' + userId + '/fil/');
+	httpRequest.open('GET', '/users/' + userId + '/feed/');
 	httpRequest.send();
 	
 	
 }
 function loadUser( userName ) {
-	var link='/utilisateurs/' + userName + '/fil/';
+	var link='/users/' + userName + '/feed/';
 	loadUser( userName, link );
 }
 function loadUser( userName, link ) {
@@ -66,7 +66,7 @@ function loadUser( userName, link ) {
 
 function loadFollows() {
 	var userName = document.getElementById("user-picked").textContent;
-	var link = "/utilisateurs/" + userName + "/abonnements/";
+	var link = "/users/" + userName + "/followees/";
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
@@ -74,9 +74,9 @@ function loadFollows() {
 				var feed = JSON.parse(httpRequest.responseText);
 				
 				console.log(feed);
-				document.getElementById("abonnements").innerHTML = "";
+				document.getElementById("followees").innerHTML = "";
 				for(var i = 0; i < feed.length ; i++ ) {				
-					document.getElementById("abonnements").innerHTML += "<li class='list-group-item followee' id=followeeId-" 
+					document.getElementById("followees").innerHTML += "<li class='list-group-item followee' id=followeeId-" 
 						+ feed[i].name + ">" + feed[i].name +
 						"<a onclick=\"unfollow('" + feed[i].name+ "')\"><span class=\"glyphicon glyphicon-remove\"></span></a>"
 						+ "</li>";
@@ -95,9 +95,9 @@ function deleteTweet(tweetId) {
 	var userName = document.getElementById("user-picked");
 	var tweet = document.getElementById("tweetId-" + tweetId);
 	if(tweet.class == "tweet") {
-		var link = "/utilisateurs/" + userName.textContent + "/tweets/" + tweet.getAttribute('id').replace("tweetId-", "");
+		var link = "/users/" + userName.textContent + "/tweets/" + tweet.getAttribute('id').replace("tweetId-", "");
 	} else {
-		var link = "/utilisateurs/" + userName.textContent + "/retweets/" + tweet.getAttribute('id').replace("tweetId-", "");
+		var link = "/users/" + userName.textContent + "/retweets/" + tweet.getAttribute('id').replace("tweetId-", "");
 	}
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
@@ -115,7 +115,7 @@ function deleteTweet(tweetId) {
 function unfollow(followeeId) {
 	var userName = document.getElementById("user-picked");
 	var followee = document.getElementById("followeeId-" + followeeId);
-	var link = "/utilisateurs/" + userName.textContent + "/abonnements/" + followee.getAttribute('id').replace("followeeId-", "");
+	var link = "/users/" + userName.textContent + "/followees/" + followee.getAttribute('id').replace("followeeId-", "");
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
@@ -132,12 +132,12 @@ function createTweet() {
 
 	var userName = document.getElementById("user-picked");
 	var tweet = document.getElementById("newTweet");
-	var link = "/utilisateurs/" + userName.textContent + "/tweets/";
+	var link = "/users/" + userName.textContent + "/tweets/";
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
 			if(httpRequest.status == 200) {
-				loadUser( userName.textContent, "/utilisateurs/" + userName.textContent + "/fil/" );
+				loadUser( userName.textContent, "/users/" + userName.textContent + "/feed/" );
 			}
 		}
 	}
@@ -164,7 +164,7 @@ function getFollowee(userId) {
 		}
 	}
 	
-	httpRequest.open('PUT', '/utilisateurs/' + userId + '/fil/');
+	httpRequest.open('PUT', '/users/' + userId + '/feed/');
 	httpRequest.send();
 	
 	
@@ -173,12 +173,12 @@ function getFollowee(userId) {
 function followUser(userId) {
 
 	var userName = document.getElementById("user-picked");
-	var link = "/utilisateurs/" + userName.textContent + "/abonnements/" + userId;
+	var link = "/users/" + userName.textContent + "/followees/" + userId;
 	var httpRequest = new XMLHttpRequest();
 	httpRequest.onreadystatechange = function() {
 		if(httpRequest.readyState == 4) {
 			if(httpRequest.status == 200) {
-				loadUser( userName.textContent, "/utilisateurs/" + userName.textContent + "/fil/" );
+				loadUser( userName.textContent, "/users/" + userName.textContent + "/feed/" );
 			}
 		}
 	}

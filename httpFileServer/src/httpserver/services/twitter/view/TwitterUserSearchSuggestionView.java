@@ -24,7 +24,7 @@ public class TwitterUserSearchSuggestionView extends View {
 		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
 		for(TwitterUser user : users) {
 			JsonObjectBuilder jsonBuilder = Json.createObjectBuilder();
-			jsonBuilder.add("name", user.getName()).add("link", user.getLink() + "/fil");
+			jsonBuilder.add("name", user.getName()).add("link", user.getLink() + "/feed");
 			jsonArrayBuilder.add(jsonBuilder.build());
 		}
 		

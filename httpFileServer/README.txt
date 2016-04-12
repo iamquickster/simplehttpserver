@@ -14,44 +14,43 @@ The API REST:
 		Get user feed
 		
 	GET /users/{userId}/tweets/
-		Obtient les tweets de l'utilisateur donné.
+		Get user Tweets
 	
 	POST /users/{userId}/tweets/
-		Ajoute un nouveau tweet avec le message dans la requete
+		Post a tweet with the message in the body
 	
 	GET /users/{userId}/tweets/{tweetId}/
-		Obtient un des tweet de l'utilisateur donné.
+		Get a tweet from a user
 	
 	DELETE /users/{userId}/tweets/{tweetId}/
-		Supprime un des tweet de l'utilisateur donné.
+		Delete a tweet from a user
 	
 	PUT /users/{userId}/tweets/{tweetId}/
-		Modifie un des tweet de l'utilisateur donné.
+		Modify a tweet
 		
 	GET /users/{userId}/retweets
-		Obtient les retweets de l'utilisateur donné.
+		Get retweets of a user
 	
 	POST /users/{userId}/retweets?tweetId={tweetID}/
-		Retweet du tweet avec identifiant {tweetId}
-		**TweetId est obligatoire**
+		Post a retweet retweet
 	
 	GET /users/{userId}/retweets/{retweetId}/
-		Obtient un des retweet de l'utilisateur donné.
+		Get a retweet
 	
 	DELETE /users/{userId}/retweets/{retweetId}/
-		Supprime un des retweet de l'utilisateur donné.
+		Delete a retweet
 		
 	GET /users/{userId}/followees/
-		Obtient les abonnement de l'utilisateur donné.
+		Get the followees of a user
 		
 	GET /users/{userId}/followees/{followeeId}/
-		Obtient un des abonnement de l'utilisateur donné.
+		Get a followee
 	
 	DELETE /users/{userId}/followees/{followeeId}/
-		Supprime un des abonnement de l'utilisateur donné.
+		Unfollow a user
 	
 	PUT /users/{userId}/followees/{followeeId}/
-		Modifie un des abonnements de l'utilisateur donné.
+		Modify a subscription
 	
 
 The port is 8080 by default but it can be specified at launch.

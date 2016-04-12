@@ -29,6 +29,6 @@ public class TwitterRetweet extends TwitterFeedItem{
 
 	@Override
 	public String getLink() {
-		return "/utilisateur/" + super.getOwner() + "/retweets/" + super.getId();
+		return "/users/" + super.getOwner() + "/retweets/" + super.getId();
 	}
 }

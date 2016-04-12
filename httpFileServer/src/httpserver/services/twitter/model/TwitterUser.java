@@ -140,12 +140,12 @@ public class TwitterUser implements JsonSerializable, HyperMedia {
 	public JsonObject toJson() {
 
 		return Json.createObjectBuilder().add("name", name).add("tweets", getLink() + "/tweets/")
-				.add("retweets", getLink() + "/retweets/").add("abonnements", getLink() + "/abonnements/").build();
+				.add("retweets", getLink() + "/retweets/").add("abonnements", getLink() + "/followees/").build();
 	}
 
 	@Override
 	public String getLink() {
-		return "/utilisateurs/" + name ;
+		return "/users/" + name ;
 	}
 
 	public static List<TwitterUser> search(String userId) {

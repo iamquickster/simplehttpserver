@@ -38,7 +38,7 @@ public class TwitterTweet extends TwitterFeedItem {
 
 	@Override
 	public String getLink() {
-		return "/utilisateurs/" + super.getOwner() + "/tweets/" + super.getId();
+		return "/users/" + super.getOwner() + "/tweets/" + super.getId();
 	}
 
 }
